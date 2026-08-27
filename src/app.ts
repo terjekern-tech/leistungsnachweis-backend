@@ -2,7 +2,7 @@ import express from "express";
 import { createAuthRouter } from "./routes/auth.routes.ts";
 import { createUserRouter } from "./routes/user.routes.ts";
 import { createPostRouter } from "./routes/post.routes.ts";
-
+import { createCommentRouter } from "./routes/comment.routes.ts";
 export const createApp = () => {
     const app = express();
 
@@ -14,5 +14,6 @@ export const createApp = () => {
     app.use("/auth", createAuthRouter());
     app.use("/users", createUserRouter());
     app.use("/posts", createPostRouter());
+    app.use("/comments", createCommentRouter());
     return app;
 };
