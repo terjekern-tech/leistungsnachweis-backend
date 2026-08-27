@@ -67,32 +67,33 @@ Code durchgegangen und habe umgeschrieben, was ich nicht erklären konnte.
 
 **Bild-Upload**
 
-Hätte ich mit multer gemacht. Den Dateinamen würde der Server selbst
-erzeugen, damit der Client keinen mitgeben kann. Dazu eine Prüfung, ob es
-wirklich ein Bild ist, und ein Limit bei der Grösse. In der Tabelle würde
-nur der Dateiname stehen, die Datei selbst liegt im Ordner.
+Dateien kommen anders an als JSON, dafür braucht Express multer. Den
+Dateinamen würde der Server selbst erzeugen, damit der Client keinen
+mitgeben kann. Dazu eine Prüfung, ob es wirklich ein Bild ist, und ein
+Limit bei der Grösse. In der Tabelle würde nur der Dateiname stehen, die
+Datei selbst liegt im Ordner.
 
 **Direktnachrichten**
 
-Wer die Nachricht schickt, würde ich aus dem Token nehmen und nicht aus dem
-Body. Beim Lesen würde ich schauen, ob der eingeloggte User Sender oder
-Empfänger ist. Wenn nicht, gibt es 403.
+Nachrichten zwischen zwei Usern, die nur diese beiden lesen dürfen. Wer die
+Nachricht schickt, würde ich aus dem Token nehmen und nicht aus dem Body.
+Beim Lesen würde ich schauen, ob der eingeloggte User Sender oder Empfänger
+ist. Wenn nicht, gibt es 403.
 
 **Cronjob**
 
-Mit `node-cron`, den man über die `.env` ausschalten kann. Er hätte bei
-Posts mit `weather_status = 'failed'` das Wetter nochmal geholt und ins Log
-geschrieben, bei wie vielen es geklappt hat.
+Code, der nach einem Zeitplan von selbst läuft, ohne dass jemand einen
+Request schickt. Mit `node-cron`, den man über die `.env` ausschalten kann.
+Er hätte bei Posts mit `weather_status = 'failed'` das Wetter nochmal
+geholt und ins Log geschrieben, bei wie vielen es geklappt hat.
 
 **Tests**
 
-Jest und Supertest hatte ich eingerichtet, es lief aber nicht sauber mit
-meiner TypeScript-Version. Testen würde ich die Stellen, wo mein Backend
-Anfragen ablehnt: ohne Token, bei falschem Body und bei fremden Posts.
-
-Bei allen Punkten hätte ich die genaue Schreibweise in der jeweiligen Doku
-nachgeschaut, den Aufbau kenne ich aber vom Unterricht und aus meinem
-anderen Projekt.
+Automatische Anfragen an die App, die prüfen, ob die richtige Antwort
+kommt. Jest und Supertest hatte ich eingerichtet, es lief aber nicht sauber
+mit meiner TypeScript-Version. Testen würde ich die Stellen, wo mein
+Backend Anfragen ablehnt: ohne Token, bei falschem Body und bei fremden
+Posts.
 
 Die Zeit habe ich stattdessen gebraucht, um bei Auth, Posts und Kommentaren
 alle Fehlerfälle sauber zu machen und alles in Postman durchzutesten.
