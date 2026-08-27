@@ -78,11 +78,6 @@ Wer die Nachricht schickt, würde ich aus dem Token nehmen und nicht aus dem
 Body. Beim Lesen würde ich schauen, ob der eingeloggte User Sender oder
 Empfänger ist. Wenn nicht, gibt es 403.
 
-**Swagger**
-
-Mit `swagger-jsdoc` Kommentare über die Routen schreiben und die Oberfläche
-mit `swagger-ui-express` unter `/api-docs` einhängen.
-
 **Cronjob**
 
 Mit `node-cron`, den man über die `.env` ausschalten kann. Er hätte bei
@@ -94,6 +89,10 @@ geschrieben, bei wie vielen es geklappt hat.
 Jest und Supertest hatte ich eingerichtet, es lief aber nicht sauber mit
 meiner TypeScript-Version. Testen würde ich die Stellen, wo mein Backend
 Anfragen ablehnt: ohne Token, bei falschem Body und bei fremden Posts.
+
+Bei allen Punkten hätte ich die genaue Schreibweise in der jeweiligen Doku
+nachgeschaut, den Aufbau kenne ich aber vom Unterricht und aus meinem
+anderen Projekt.
 
 Die Zeit habe ich stattdessen gebraucht, um bei Auth, Posts und Kommentaren
 alle Fehlerfälle sauber zu machen und alles in Postman durchzutesten.
