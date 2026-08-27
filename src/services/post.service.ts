@@ -1,5 +1,6 @@
 import { connection } from "../config/db.ts";
 import { createPostSchema, updatePostSchema } from "../validation/post.validation.ts";
+import { holeTemperatur } from "./weather.service.ts";
 
 export const getPosts = async (req: any, res: any) => {
     const limit = Number(req.query.limit) || 10;
@@ -43,13 +44,8 @@ export const getPostById = async (req: any, res: any) => {
         [postId]
     );
 
-    const links = await connection.query(
-        "SELECT * FROM links WHERE post_id = $1 ORDER BY id",
-        [postId]
-    );
-
     post.comments = comments.rows;
-    post.links = links.rows;
+    
 
     return res.status(200).json(post);
 };
@@ -61,9 +57,27 @@ export const createPost = async (req: any, res: any) => {
         return res.status(400).json({ error: "Ungueltige Daten" });
     }
 
+    let temperatur = null;
+
+    try {
+        temperatur = await holeTemperatur();
+    } catch {
+        console.log("Wetter-API nicht erreichbar");
+    }
+
+    if (temperatur === null) {
+        const created = await connection.query(
+            "INSERT INTO posts (user_id, title, body, weather_status) VALUES ($1, $2, $3, 'failed') RETURNING *",
+            [req.userId, result.data.title, result.data.body]
+        );
+
+        return res.status(201).json(created.rows[0]);
+    }
+
     const created = await connection.query(
-        "INSERT INTO posts (user_id, title, body) VALUES ($1, $2, $3) RETURNING *",
-        [req.userId, result.data.title, result.data.body]
+        `INSERT INTO posts (user_id, title, body, weather_temperature, weather_status, weather_fetched_at)
+         VALUES ($1, $2, $3, $4, 'ok', NOW()) RETURNING *`,
+        [req.userId, result.data.title, result.data.body, temperatur]
     );
 
     return res.status(201).json(created.rows[0]);
