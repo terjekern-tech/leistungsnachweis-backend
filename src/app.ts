@@ -1,5 +1,8 @@
 import express from "express";
 import { createAuthRouter } from "./routes/auth.routes.ts";
+import { createUserRouter } from "./routes/user.routes.ts";
+
+
 export const createApp = () => {
     const app = express();
 
@@ -9,6 +12,6 @@ export const createApp = () => {
         res.status(200).json({ status: "ok" });
     });
     app.use("/auth", createAuthRouter());
-
+    app.use("/users", createUserRouter());
     return app;
 };
